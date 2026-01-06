@@ -1,0 +1,2106 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+  <title>Wahid Pro — Mind-Blowing Spare Parts Store (Bootstrap 4)</title>
+
+  <!-- Bootstrap 4.6 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    :root{
+      --bg0:#070b14;
+      --bg1:#0a1020;
+      --glass:rgba(255,255,255,.06);
+      --glass2:rgba(255,255,255,.035);
+      --line:rgba(255,255,255,.10);
+      --muted:rgba(233,240,255,.70);
+      --text:#e9f0ff;
+      --brand:#4f8cff;
+      --brand2:#7c5cff;
+      --good:#28a745;
+      --warn:#ffc107;
+      --bad:#dc3545;
+      --shadow: 0 24px 70px rgba(0,0,0,.38);
+    }
+
+    /* Light mode (toggle) */
+    body.light{
+      --bg0:#f6f8ff;
+      --bg1:#edf2ff;
+      --glass:rgba(255,255,255,.65);
+      --glass2:rgba(255,255,255,.55);
+      --line:rgba(20,30,60,.14);
+      --muted:rgba(20,30,60,.72);
+      --text:#0b1220;
+      --shadow: 0 18px 50px rgba(12,20,55,.12);
+    }
+
+    html, body { height:100%; }
+    body{
+      background: radial-gradient(900px 460px at 15% 10%, rgba(79,140,255,.28), transparent 60%),
+                  radial-gradient(900px 460px at 85% 12%, rgba(124,92,255,.22), transparent 60%),
+                  linear-gradient(180deg,var(--bg0) 0%, var(--bg1) 100%);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:rgba(170,200,255,.95);}
+    body.light a{color:rgba(46,96,205,.95);}
+    a:hover{text-decoration:none; opacity:.95;}
+
+    /* Subtle animated glow */
+    .glow{
+      position:fixed; inset:-200px;
+      background:
+        radial-gradient(800px 500px at 10% 10%, rgba(79,140,255,.16), transparent 62%),
+        radial-gradient(900px 550px at 90% 15%, rgba(124,92,255,.13), transparent 64%),
+        radial-gradient(700px 520px at 40% 90%, rgba(40,167,69,.08), transparent 60%);
+      filter: blur(18px);
+      z-index:-1;
+      animation: floatGlow 12s ease-in-out infinite;
+      opacity:.9;
+      pointer-events:none;
+    }
+    @keyframes floatGlow{
+      0%,100%{ transform: translate3d(0,0,0) scale(1); }
+      50%{ transform: translate3d(18px,-12px,0) scale(1.03); }
+    }
+
+    .topbar{
+      background:linear-gradient(90deg, rgba(79,140,255,.24), rgba(124,92,255,.18));
+      border-bottom:1px solid var(--line);
+    }
+    .topbar small{ color:rgba(233,240,255,.92); }
+    body.light .topbar small{ color:rgba(10,18,32,.86); }
+
+    .navbar{
+      background:rgba(10,16,32,.72);
+      backdrop-filter: blur(12px);
+      border-bottom:1px solid var(--line);
+    }
+    body.light .navbar{
+      background:rgba(255,255,255,.72);
+    }
+    .nav-pill{
+      border:1px solid var(--line);
+      background:var(--glass2);
+      border-radius:999px;
+      padding:.38rem .8rem;
+      color:var(--text);
+      transition:.15s ease;
+    }
+    .nav-pill:hover{ transform: translateY(-1px); background:var(--glass); }
+    .brandMark{
+      width:38px;height:38px;border-radius:14px;
+      background:linear-gradient(135deg, rgba(79,140,255,.95), rgba(124,92,255,.85));
+      display:inline-flex;align-items:center;justify-content:center;
+      box-shadow: 0 14px 30px rgba(79,140,255,.18);
+    }
+
+    .search-wrap{
+      background:var(--glass2);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:.35rem;
+      position:relative;
+      box-shadow: 0 10px 30px rgba(0,0,0,.10);
+    }
+    .search-wrap .form-control{
+      background:transparent;border:0;color:var(--text);
+      height:44px;
+    }
+    .search-wrap .form-control::placeholder{ color:rgba(233,240,255,.55); }
+    body.light .search-wrap .form-control::placeholder{ color:rgba(10,18,32,.45); }
+    .search-wrap .btn{ border-radius:14px; height:44px; }
+    .suggest{
+      position:absolute;
+      left:0;right:0;top:calc(100% + 8px);
+      background:rgba(10,16,32,.88);
+      border:1px solid var(--line);
+      border-radius:16px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      display:none;
+      z-index:40;
+    }
+    body.light .suggest{ background:rgba(255,255,255,.92); }
+    .suggest .item{
+      padding:10px 12px;
+      border-bottom:1px solid var(--line);
+      cursor:pointer;
+    }
+    .suggest .item:last-child{border-bottom:0;}
+    .suggest .item:hover{ background:var(--glass); }
+    .kbd{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas,"Liberation Mono","Courier New",monospace;
+      font-size:.82rem;
+      border:1px solid var(--line);
+      background:var(--glass2);
+      border-bottom-color:rgba(255,255,255,.22);
+      padding:.1rem .35rem;
+      border-radius:8px;
+      color:var(--text);
+    }
+
+    /* Hero */
+    .hero{
+      border-bottom:1px solid var(--line);
+      position:relative;
+      overflow:hidden;
+    }
+    .hero::before{
+      content:"";
+      position:absolute; inset:-2px;
+      background:
+        radial-gradient(750px 420px at 20% 20%, rgba(79,140,255,.28), transparent 60%),
+        radial-gradient(860px 420px at 80% 30%, rgba(124,92,255,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+      filter: saturate(1.1);
+      z-index:-1;
+    }
+    .heroCard{
+      border:1px solid var(--line);
+      background:rgba(255,255,255,.04);
+      backdrop-filter: blur(12px);
+      border-radius:22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .heroMedia{
+      min-height:420px;
+      background-size:cover;
+      background-position:center;
+      position:relative;
+    }
+    .heroMedia::after{
+      content:"";
+      position:absolute; inset:0;
+      background:linear-gradient(90deg, rgba(10,16,32,.90), rgba(10,16,32,.25));
+    }
+    body.light .heroMedia::after{
+      background:linear-gradient(90deg, rgba(245,248,255,.86), rgba(245,248,255,.12));
+    }
+    .heroOverlay{
+      position:absolute; inset:0;
+      display:flex; align-items:flex-end;
+      padding:18px;
+      z-index:2;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:.5rem;
+      border:1px solid var(--line);
+      background:rgba(10,16,32,.70);
+      color:var(--text);
+      padding:.45rem .85rem;
+      border-radius:999px;
+      font-weight:700;
+      letter-spacing:.2px;
+    }
+    body.light .pill{ background:rgba(255,255,255,.68); }
+
+    .chip{
+      display:inline-flex; align-items:center; gap:.5rem;
+      border:1px solid var(--line);
+      background:var(--glass2);
+      border-radius:999px;
+      padding:.46rem .85rem;
+      color:var(--text);
+      cursor:pointer;
+      user-select:none;
+      transition:.15s ease;
+      margin:.24rem .38rem .24rem 0;
+      white-space:nowrap;
+    }
+    .chip:hover{ background:var(--glass); transform:translateY(-1px); }
+    .chip.active{
+      background:linear-gradient(90deg, rgba(79,140,255,.20), rgba(124,92,255,.16));
+      border-color:rgba(139,176,255,.35);
+    }
+
+    /* Panels / Cards */
+    .panel{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:var(--glass2);
+      box-shadow: 0 14px 50px rgba(0,0,0,.22);
+    }
+    body.light .panel{ box-shadow: 0 16px 44px rgba(12,20,55,.10); }
+    .panel-h{
+      padding:14px 14px 10px 14px;
+      border-bottom:1px solid var(--line);
+    }
+    .panel-b{ padding:14px; }
+
+    .form-control, .custom-select{
+      background:var(--glass2);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:14px;
+    }
+    .form-control:focus, .custom-select:focus{
+      background:var(--glass);
+      border-color:rgba(79,140,255,.65);
+      box-shadow:0 0 0 .2rem rgba(79,140,255,.15);
+      color:var(--text);
+    }
+
+    /* Product cards */
+    .product-card{
+      border:1px solid var(--line);
+      border-radius:20px;
+      background:var(--glass2);
+      overflow:hidden;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      height:100%;
+      position:relative;
+    }
+    .product-card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(139,176,255,.35);
+      box-shadow: var(--shadow);
+    }
+    .p-img{
+      aspect-ratio: 4/3;
+      background:rgba(10,16,32,.30);
+      overflow:hidden;
+      position:relative;
+    }
+    .p-img img{
+      width:100%;height:100%;
+      object-fit:cover;
+      filter:saturate(1.07) contrast(1.05);
+      transform: scale(1.02);
+      transition: transform .4s ease;
+    }
+    .product-card:hover .p-img img{ transform: scale(1.08); }
+    .p-badges{
+      position:absolute; left:12px; top:12px; display:flex; gap:.4rem; z-index:2;
+    }
+    .p-actions{
+      position:absolute; right:12px; top:12px; display:flex; flex-direction:column; gap:.45rem; z-index:2;
+    }
+    .icon-btn{
+      width:38px;height:38px;border-radius:14px;
+      border:1px solid var(--line);
+      background:rgba(10,16,32,.70);
+      color:var(--text);
+      cursor:pointer;
+      transition:.15s ease;
+      display:inline-flex;align-items:center;justify-content:center;
+    }
+    body.light .icon-btn{ background:rgba(255,255,255,.70); }
+    .icon-btn:hover{ background:rgba(10,16,32,.92); transform:translateY(-1px); }
+    body.light .icon-btn:hover{ background:rgba(255,255,255,.92); }
+    .price{ font-weight:900; letter-spacing:.2px; }
+    .muted{ color:var(--muted); }
+    .rating i{ color:#ffcf4a; }
+    .divider{ border-top:1px solid var(--line); }
+
+    /* Floating compare bar */
+    .dock{
+      position:fixed;
+      left:18px; right:18px; bottom:18px;
+      z-index:1050;
+      display:none;
+    }
+    .dock .inner{
+      border:1px solid var(--line);
+      background:rgba(10,16,32,.88);
+      backdrop-filter: blur(14px);
+      border-radius:18px;
+      box-shadow: var(--shadow);
+      padding:12px;
+    }
+    body.light .dock .inner{ background:rgba(255,255,255,.90); }
+    .dock .mini{
+      border:1px solid var(--line);
+      background:var(--glass2);
+      border-radius:14px;
+      padding:8px 10px;
+    }
+
+    /* Toast */
+    .toast{
+      background:rgba(10,16,32,.92);
+      border:1px solid var(--line);
+      color:var(--text);
+      border-radius:16px;
+      overflow:hidden;
+      box-shadow: var(--shadow);
+    }
+    body.light .toast{ background:rgba(255,255,255,.92); }
+    .toast-header{
+      background:rgba(255,255,255,.03);
+      border-bottom:1px solid var(--line);
+      color:var(--text);
+    }
+
+    /* Modal */
+    .modal-content{
+      background:rgba(10,16,32,.96);
+      border:1px solid var(--line);
+      border-radius:20px;
+      color:var(--text);
+      box-shadow: var(--shadow);
+    }
+    body.light .modal-content{ background:rgba(255,255,255,.96); }
+    .modal-header{ border-bottom:1px solid var(--line); }
+    .modal-footer{ border-top:1px solid var(--line); }
+
+    /* Skeleton loader */
+    .skeleton{
+      background: linear-gradient(90deg, rgba(255,255,255,.06), rgba(255,255,255,.13), rgba(255,255,255,.06));
+      background-size: 200% 100%;
+      animation: shimmer 1.2s linear infinite;
+      border-radius:14px;
+    }
+    @keyframes shimmer{
+      0%{ background-position: 200% 0; }
+      100%{ background-position: -200% 0; }
+    }
+
+    /* Footer */
+    .footer{
+      border-top:1px solid var(--line);
+      background:rgba(10,16,32,.55);
+    }
+    body.light .footer{ background:rgba(255,255,255,.55); }
+
+    /* Small helpers */
+    .btn{ border-radius:14px; }
+    .btn-lg{ border-radius:16px; }
+    .badge-soft{
+      background:rgba(79,140,255,.16);
+      border:1px solid rgba(79,140,255,.35);
+      color:var(--text);
+      font-weight:700;
+    }
+    .badge-ghost{
+      background:rgba(255,255,255,.05);
+      border:1px solid var(--line);
+      color:var(--text);
+      font-weight:700;
+    }
+
+    /* Mobile polish */
+    @media (max-width: 991px){
+      .heroMedia{ min-height:340px; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="glow"></div>
+
+  <!-- TOP ANNOUNCEMENT BAR -->
+  <div class="topbar py-2">
+    <div class="container d-flex align-items-center justify-content-between">
+      <small>
+        <i class="fas fa-bolt mr-2"></i>
+        New Year Promo: <b>15% OFF</b> brake kits • Free delivery over <b>$75</b> • <span class="kbd">WHD15</span>
+      </small>
+      <small class="d-none d-md-block muted">
+        <i class="fas fa-shield-alt mr-1"></i> Verified OEM Cross •
+        <i class="fas fa-undo-alt mx-1"></i> Easy Returns •
+        <i class="fas fa-lock mx-1"></i> Secure Payments
+      </small>
+    </div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg navbar-dark sticky-top">
+    <div class="container">
+      <a class="navbar-brand font-weight-bold d-flex align-items-center" href="#">
+        <span class="brandMark mr-2"><i class="fas fa-cog"></i></span>
+        <span>Wahid <span class="badge badge-soft ml-2">PRO</span></span>
+      </a>
+
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navMain">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+          <li class="nav-item mr-2"><a class="nav-link nav-pill" href="#shop"><i class="fas fa-store mr-1"></i>Shop</a></li>
+          <li class="nav-item mr-2"><a class="nav-link nav-pill" href="#fitment"><i class="fas fa-car mr-1"></i>Fitment</a></li>
+          <li class="nav-item mr-2"><a class="nav-link nav-pill" href="#deals"><i class="fas fa-bolt mr-1"></i>Deals</a></li>
+          <li class="nav-item mr-2"><a class="nav-link nav-pill" href="#guides"><i class="fas fa-book mr-1"></i>Guides</a></li>
+          <li class="nav-item mr-2"><a class="nav-link nav-pill" href="#support"><i class="fas fa-headset mr-1"></i>Support</a></li>
+        </ul>
+
+        <div class="d-flex align-items-center w-100 w-lg-auto">
+          <div class="search-wrap w-100 mr-lg-3 mb-2 mb-lg-0">
+            <div class="input-group">
+              <div class="input-group-prepend">
+                <span class="input-group-text bg-transparent border-0" style="color:var(--text)"><i class="fas fa-search"></i></span>
+              </div>
+              <input id="q" class="form-control" placeholder='Search part / OEM / SKU… (try: "filter" or "NGK")' autocomplete="off"/>
+              <div class="input-group-append">
+                <button class="btn btn-outline-light" id="btnVoice" title="Voice search (UI)">
+                  <i class="fas fa-microphone"></i>
+                </button>
+                <button class="btn btn-primary" id="btnSearch"><i class="fas fa-arrow-right"></i></button>
+              </div>
+            </div>
+            <div class="suggest" id="suggestBox"></div>
+          </div>
+
+          <button class="btn btn-outline-light mr-2" id="btnTheme" title="Toggle theme">
+            <i class="fas fa-adjust"></i>
+          </button>
+
+          <button class="btn btn-outline-light mr-2" data-toggle="modal" data-target="#compareModal" id="btnCompareOpen">
+            <i class="fas fa-balance-scale"></i>
+            <span class="d-none d-md-inline ml-1">Compare</span>
+            <span class="badge badge-light ml-2" id="compareCount">0</span>
+          </button>
+
+          <button class="btn btn-outline-light mr-2" data-toggle="modal" data-target="#cartModal">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="d-none d-md-inline ml-1">Cart</span>
+            <span class="badge badge-light ml-2" id="cartCount">0</span>
+          </button>
+
+          <button class="btn btn-outline-light" id="btnHotkey" title="Keyboard: / focus search">
+            <i class="fas fa-keyboard"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero py-4 py-lg-5">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-5 mb-4 mb-lg-0">
+          <div class="d-flex flex-wrap align-items-center mb-3">
+            <span class="badge badge-soft px-3 py-2 mr-2 mb-2">
+              <i class="fas fa-shipping-fast mr-2"></i>Fast delivery
+            </span>
+            <span class="badge badge-ghost px-3 py-2 mr-2 mb-2">
+              <i class="fas fa-check-circle mr-2"></i>Verified OEM cross
+            </span>
+            <span class="badge badge-ghost px-3 py-2 mb-2">
+              <i class="fas fa-shield-alt mr-2"></i>Warranty on select parts
+            </span>
+          </div>
+
+          <h1 class="display-4 font-weight-bold mb-3" style="line-height:1.05;">
+            Find the exact spare part—<span style="color:var(--brand)">instantly</span>.
+          </h1>
+
+          <p class="lead muted mb-4">
+            Ultra-fast search, fitment-first UX, compare brands, and one-tap reorder.
+            Built for garages, fleets, and serious parts buyers.
+          </p>
+
+          <div class="d-flex flex-wrap align-items-center">
+            <div class="chip active" data-chip="All"><i class="fas fa-th-large"></i> All</div>
+            <div class="chip" data-chip="Brakes"><i class="fas fa-stop-circle"></i> Brakes</div>
+            <div class="chip" data-chip="Filters"><i class="fas fa-filter"></i> Filters</div>
+            <div class="chip" data-chip="Ignition"><i class="fas fa-bolt"></i> Ignition</div>
+            <div class="chip" data-chip="Exhaust"><i class="fas fa-wind"></i> Exhaust</div>
+            <div class="chip" data-chip="Suspension"><i class="fas fa-dharmachakra"></i> Suspension</div>
+          </div>
+
+          <div class="mt-4 d-flex flex-wrap">
+            <button class="btn btn-primary btn-lg mr-2 mb-2" onclick="document.querySelector('#shop').scrollIntoView({behavior:'smooth'})">
+              <i class="fas fa-store mr-2"></i>Browse Parts
+            </button>
+            <button class="btn btn-outline-light btn-lg mb-2" data-toggle="modal" data-target="#fitmentWizard">
+              <i class="fas fa-magic mr-2"></i>Fitment Wizard
+            </button>
+          </div>
+
+          <div class="mt-3 muted">
+            Hotkeys: <span class="kbd">/</span> focus search • <span class="kbd">Esc</span> clear • <span class="kbd">C</span> open cart
+          </div>
+        </div>
+
+        <div class="col-lg-7">
+          <div class="heroCard">
+            <div class="heroMedia"
+              style="background-image:url('https://commons.wikimedia.org/wiki/Special:FilePath/Car%20workshop%20tools.jpg?width=1800');">
+              <div class="heroOverlay">
+                <div class="w-100">
+                  <div class="d-flex flex-wrap justify-content-between align-items-end">
+                    <div class="mb-2">
+                      <div class="pill mb-2"><i class="fas fa-tag"></i> Today’s Deal</div>
+                      <h4 class="font-weight-bold mb-1">Premium Brake Pads • 2-Year Warranty</h4>
+                      <div class="muted">Limited stock • Verified OEM cross • Ships today</div>
+                    </div>
+                    <div class="mb-2">
+                      <button class="btn btn-success btn-lg" id="btnDeal">
+                        <i class="fas fa-bolt mr-2"></i>View Deal
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-3 p-md-4">
+              <div class="row">
+                <div class="col-md-4 mb-2 mb-md-0">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-stopwatch mr-3" style="color:var(--brand)"></i>
+                    <div>
+                      <div class="font-weight-bold">2-sec Search</div>
+                      <div class="muted small">Instant suggestions & OEM match</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4 mb-2 mb-md-0">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-tools mr-3" style="color:var(--brand2)"></i>
+                    <div>
+                      <div class="font-weight-bold">Garage-ready</div>
+                      <div class="muted small">Guides, specs & cross-refs</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-4">
+                  <div class="d-flex align-items-center">
+                    <i class="fas fa-truck mr-3" style="color:var(--good)"></i>
+                    <div>
+                      <div class="font-weight-bold">Fast Dispatch</div>
+                      <div class="muted small">Same day for in-stock items</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <small class="d-block mt-2 muted">Sample hero image: Wikimedia Commons</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- FITMENT SECTION (inline) -->
+  <section class="py-4" id="fitment">
+    <div class="container">
+      <div class="panel">
+        <div class="panel-h d-flex align-items-center justify-content-between">
+          <div class="font-weight-bold"><i class="fas fa-car mr-2"></i>Fitment (Instant Check)</div>
+          <span class="muted small">UI demo • Real systems map VIN → Trim → Parts</span>
+        </div>
+        <div class="panel-b">
+          <div class="row">
+            <div class="col-lg-5 mb-3 mb-lg-0">
+              <div class="form-group mb-2">
+                <label class="muted mb-1">Enter VIN (placeholder)</label>
+                <input class="form-control" id="vin" placeholder="e.g., 1HGCM82633A..." />
+              </div>
+              <div class="form-row">
+                <div class="form-group col-6 mb-2">
+                  <label class="muted mb-1">Make</label>
+                  <select class="custom-select" id="make">
+                    <option value="">Select</option>
+                    <option>Toyota</option><option>Hyundai</option><option>Ford</option><option>Nissan</option>
+                  </select>
+                </div>
+                <div class="form-group col-6 mb-2">
+                  <label class="muted mb-1">Year</label>
+                  <select class="custom-select" id="year">
+                    <option value="">Select</option>
+                    <option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary btn-block" id="btnFitment">
+                <i class="fas fa-check mr-2"></i>Check Fitment
+              </button>
+              <div class="muted small mt-2">
+                Pro UX: store vehicle profile → show “compatible parts” badge across listings.
+              </div>
+            </div>
+
+            <div class="col-lg-7">
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="font-weight-bold"><i class="fas fa-list mr-2"></i>Recommended for your vehicle</div>
+                    <span class="badge badge-soft" id="fitmentBadge">Not checked</span>
+                  </div>
+                  <div class="muted mb-3">After checking, we’ll highlight compatible items and prioritize your results.</div>
+
+                  <div class="row" id="fitmentRecs">
+                    <!-- filled by JS -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAIN SHOP -->
+  <main class="py-4" id="shop">
+    <div class="container">
+      <!-- TOP BAR -->
+      <div class="d-flex flex-wrap align-items-center justify-content-between mb-3">
+        <div class="d-flex align-items-center mb-2 mb-md-0">
+          <h2 class="h4 font-weight-bold mb-0 mr-3">Shop Parts</h2>
+          <span class="muted">Showing <b id="resultCount">0</b> items</span>
+          <span class="badge badge-ghost ml-3 d-none d-md-inline" id="savedVehicle">No vehicle saved</span>
+        </div>
+
+        <div class="d-flex align-items-center">
+          <button class="btn btn-outline-light mr-2" data-toggle="modal" data-target="#filtersModal">
+            <i class="fas fa-sliders-h mr-2"></i>Filters
+            <span class="badge badge-light ml-2" id="activeFilters">0</span>
+          </button>
+
+          <select class="custom-select mr-2" id="sortBy" style="width:220px">
+            <option value="relevance">Sort: Relevance</option>
+            <option value="priceAsc">Price: Low to High</option>
+            <option value="priceDesc">Price: High to Low</option>
+            <option value="ratingDesc">Rating: High to Low</option>
+            <option value="stockDesc">Stock: High to Low</option>
+          </select>
+
+          <button class="btn btn-outline-light" id="btnReset">
+            <i class="fas fa-undo mr-2"></i>Reset
+          </button>
+        </div>
+      </div>
+
+      <!-- GRID -->
+      <div class="row" id="productGrid">
+        <!-- skeletons -->
+      </div>
+
+      <div class="text-center mt-3">
+        <button class="btn btn-outline-light" id="btnLoadMore">
+          <i class="fas fa-plus mr-2"></i>Load More (demo)
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- DEALS -->
+  <section class="py-4" id="deals">
+    <div class="container">
+      <div class="panel">
+        <div class="panel-h d-flex align-items-center justify-content-between">
+          <div class="font-weight-bold"><i class="fas fa-bolt mr-2"></i>Deals & Bundles</div>
+          <span class="muted small">UI demo • Bundle logic & coupons are placeholders</span>
+        </div>
+        <div class="panel-b">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="product-card">
+                <div class="p-img">
+                  <img alt="Brake pads" src="https://commons.wikimedia.org/wiki/Special:FilePath/Brake%20pads.JPG?width=900">
+                  <div class="p-badges">
+                    <span class="badge badge-warning">-15%</span>
+                    <span class="badge badge-soft">Bundle</span>
+                  </div>
+                </div>
+                <div class="p-3">
+                  <div class="font-weight-bold">Brake Service Kit</div>
+                  <div class="muted small">Pads + shoes (sample)</div>
+                  <div class="d-flex align-items-center justify-content-between mt-2">
+                    <div class="price">$89 <small class="muted">/kit</small></div>
+                    <button class="btn btn-success btn-sm" onclick="addToCartBySku('KIT-BRAKE-01')">
+                      <i class="fas fa-cart-plus mr-1"></i>Add
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-8">
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <h5 class="font-weight-bold mb-2">Mind-Blowing UX upgrades included</h5>
+                  <div class="row">
+                    <div class="col-sm-6 mb-2">
+                      <div class="d-flex align-items-start">
+                        <i class="fas fa-balance-scale mr-3" style="color:var(--brand)"></i>
+                        <div>
+                          <div class="font-weight-bold">Compare Drawer</div>
+                          <div class="muted small">Pick up to 3 parts and compare</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                      <div class="d-flex align-items-start">
+                        <i class="fas fa-heart mr-3" style="color:var(--brand2)"></i>
+                        <div>
+                          <div class="font-weight-bold">Wishlist</div>
+                          <div class="muted small">Persisted in localStorage</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                      <div class="d-flex align-items-start">
+                        <i class="fas fa-magic mr-3" style="color:var(--good)"></i>
+                        <div>
+                          <div class="font-weight-bold">Fitment Wizard</div>
+                          <div class="muted small">Multi-step modal experience</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-sm-6 mb-2">
+                      <div class="d-flex align-items-start">
+                        <i class="fas fa-lightbulb mr-3" style="color:var(--warn)"></i>
+                        <div>
+                          <div class="font-weight-bold">Smart Suggestions</div>
+                          <div class="muted small">Search dropdown + quick actions</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <hr class="divider">
+
+                  <div class="d-flex flex-wrap align-items-center justify-content-between">
+                    <div class="muted">Apply coupon at checkout: <span class="kbd">WHD15</span></div>
+                    <button class="btn btn-outline-light" onclick="toast('Deals', 'Coupon copied (demo).')">
+                      <i class="far fa-copy mr-2"></i>Copy Coupon
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUIDES -->
+  <section class="py-4" id="guides">
+    <div class="container">
+      <div class="panel">
+        <div class="panel-h d-flex align-items-center justify-content-between">
+          <div class="font-weight-bold"><i class="fas fa-book mr-2"></i>Install Guides (Sample)</div>
+          <span class="muted small">Short, high-signal content blocks</span>
+        </div>
+        <div class="panel-b">
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="font-weight-bold mb-1">Brake Pads</div>
+                  <div class="muted small mb-2">Torque specs, bedding, safety checks.</div>
+                  <button class="btn btn-outline-light btn-sm" onclick="toast('Guide', 'Brake pad guide opened (demo).')">
+                    <i class="fas fa-arrow-right mr-2"></i>Open
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="font-weight-bold mb-1">Oil Filter</div>
+                  <div class="muted small mb-2">Correct thread, gasket lube, hand-tight.</div>
+                  <button class="btn btn-outline-light btn-sm" onclick="toast('Guide', 'Oil filter guide opened (demo).')">
+                    <i class="fas fa-arrow-right mr-2"></i>Open
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="font-weight-bold mb-1">Spark Plugs</div>
+                  <div class="muted small mb-2">Gap, anti-seize (engine-specific), torque.</div>
+                  <button class="btn btn-outline-light btn-sm" onclick="toast('Guide', 'Spark plug guide opened (demo).')">
+                    <i class="fas fa-arrow-right mr-2"></i>Open
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="row align-items-center">
+            <div class="col-md-7 mb-3 mb-md-0">
+              <h5 class="font-weight-bold mb-1">Newsletter for Mechanics</h5>
+              <div class="muted">Deals, common OEM cross references, and fitment tips.</div>
+            </div>
+            <div class="col-md-5">
+              <div class="input-group">
+                <input class="form-control" id="newsEmail" placeholder="your@email.com" />
+                <div class="input-group-append">
+                  <button class="btn btn-primary" onclick="toast('Subscribed', 'Thanks! (demo)')">
+                    <i class="fas fa-paper-plane"></i>
+                  </button>
+                </div>
+              </div>
+              <small class="muted">No spam. Demo only.</small>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SUPPORT -->
+  <section class="py-4" id="support">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-7 mb-3">
+          <div class="panel">
+            <div class="panel-h font-weight-bold"><i class="fas fa-headset mr-2"></i>Support</div>
+            <div class="panel-b">
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <div class="panel" style="background:var(--glass2)">
+                    <div class="panel-b">
+                      <div class="font-weight-bold mb-1">Need the exact part?</div>
+                      <div class="muted small mb-2">Send OEM/VIN (placeholder) & we’ll match it.</div>
+                      <button class="btn btn-outline-light btn-sm" onclick="toast('Support', 'Ticket started (demo).')">
+                        <i class="fas fa-paper-plane mr-1"></i>Start Ticket
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-6 mb-3">
+                  <div class="panel" style="background:var(--glass2)">
+                    <div class="panel-b">
+                      <div class="font-weight-bold mb-1">Bulk orders</div>
+                      <div class="muted small mb-2">Fleet pricing & invoice checkout.</div>
+                      <button class="btn btn-outline-light btn-sm" onclick="toast('Sales', 'Quote requested (demo).')">
+                        <i class="fas fa-file-invoice-dollar mr-1"></i>Request Quote
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="divider">
+
+              <div class="d-flex flex-wrap align-items-center justify-content-between">
+                <div class="mb-2 mb-md-0">
+                  <div class="font-weight-bold">Email</div>
+                  <div class="muted small">support@wahid.example</div>
+                </div>
+                <div class="mb-2 mb-md-0">
+                  <div class="font-weight-bold">Phone</div>
+                  <div class="muted small">+251 000 000 000 (sample)</div>
+                </div>
+                <div>
+                  <div class="font-weight-bold">Hours</div>
+                  <div class="muted small">Mon–Sat, 9:00–18:00</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5 mb-3">
+          <div class="panel">
+            <div class="panel-h font-weight-bold"><i class="fas fa-info-circle mr-2"></i>Sample Image Credits</div>
+            <div class="panel-b muted small">
+              Images are loaded from Wikimedia Commons (free media repository), via <b>Special:FilePath</b>.
+              Replace with your own product photos anytime.
+              <ul class="mb-0 mt-2">
+                <li>Car workshop tools (hero)</li>
+                <li>Brake pads / brake shoes</li>
+                <li>Spark plugs</li>
+                <li>Bosch oil filter</li>
+                <li>Air filter</li>
+                <li>Diesel particulate filter</li>
+                <li>Shock absorber (suspension)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer py-4 mt-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="font-weight-bold">Wahid Pro</div>
+          <div class="muted small">Mind-blowing Bootstrap 4 spare-parts e-commerce UI (single-file demo).</div>
+        </div>
+        <div class="col-md-6 text-md-right mt-3 mt-md-0">
+          <a href="#shop" class="mr-3">Shop</a>
+          <a href="#fitment" class="mr-3">Fitment</a>
+          <a href="#deals" class="mr-3">Deals</a>
+          <a href="#support">Support</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- FLOATING COMPARE DOCK -->
+  <div class="dock" id="compareDock">
+    <div class="inner">
+      <div class="d-flex align-items-center justify-content-between flex-wrap">
+        <div class="d-flex align-items-center">
+          <div class="font-weight-bold mr-3"><i class="fas fa-balance-scale mr-2"></i>Compare</div>
+          <div class="muted small">Select up to 3 parts</div>
+        </div>
+        <div class="d-flex align-items-center mt-2 mt-md-0">
+          <div class="mini mr-2"><span class="muted">Selected:</span> <b id="dockCount">0</b></div>
+          <button class="btn btn-primary mr-2" data-toggle="modal" data-target="#compareModal">
+            <i class="fas fa-columns mr-2"></i>Open
+          </button>
+          <button class="btn btn-outline-light" onclick="clearCompare()">
+            <i class="fas fa-trash mr-2"></i>Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FILTERS MODAL (mobile-first filters) -->
+  <div class="modal fade" id="filtersModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold"><i class="fas fa-sliders-h mr-2"></i>Advanced Filters</h5>
+          <button type="button" class="close" style="color:var(--text)" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-lg-6">
+              <div class="panel mb-3">
+                <div class="panel-h font-weight-bold">Category</div>
+                <div class="panel-b">
+                  <select class="custom-select" id="filterCategory">
+                    <option value="All">All</option>
+                    <option value="Brakes">Brakes</option>
+                    <option value="Filters">Filters</option>
+                    <option value="Ignition">Ignition</option>
+                    <option value="Exhaust">Exhaust</option>
+                    <option value="Suspension">Suspension</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="panel mb-3">
+                <div class="panel-h font-weight-bold">Brand</div>
+                <div class="panel-b">
+                  <select class="custom-select" id="filterBrand">
+                    <option value="All">All</option>
+                    <option value="Bosch">Bosch</option>
+                    <option value="NGK">NGK</option>
+                    <option value="OEM">OEM</option>
+                    <option value="Brembo">Brembo</option>
+                    <option value="KYB">KYB</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-h font-weight-bold">Condition</div>
+                <div class="panel-b">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="condNew" checked>
+                    <label class="custom-control-label" for="condNew">New</label>
+                  </div>
+                  <div class="custom-control custom-checkbox mt-2">
+                    <input type="checkbox" class="custom-control-input" id="condRefurb">
+                    <label class="custom-control-label" for="condRefurb">Refurbished</label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="panel mb-3">
+                <div class="panel-h font-weight-bold">Price Range (USD)</div>
+                <div class="panel-b">
+                  <div class="form-row">
+                    <div class="col-6">
+                      <input class="form-control" id="minPrice" placeholder="Min" type="number" min="0" />
+                    </div>
+                    <div class="col-6">
+                      <input class="form-control" id="maxPrice" placeholder="Max" type="number" min="0" />
+                    </div>
+                  </div>
+                  <small class="muted">Example: 10 — 120</small>
+                </div>
+              </div>
+
+              <div class="panel mb-3">
+                <div class="panel-h font-weight-bold">Rating</div>
+                <div class="panel-b">
+                  <div class="custom-control custom-radio">
+                    <input type="radio" id="rAll" name="rating" class="custom-control-input" checked>
+                    <label class="custom-control-label" for="rAll">Any</label>
+                  </div>
+                  <div class="custom-control custom-radio mt-2">
+                    <input type="radio" id="r4" name="rating" class="custom-control-input">
+                    <label class="custom-control-label" for="r4">4★ & up</label>
+                  </div>
+                  <div class="custom-control custom-radio mt-2">
+                    <input type="radio" id="r45" name="rating" class="custom-control-input">
+                    <label class="custom-control-label" for="r45">4.5★ & up</label>
+                  </div>
+                </div>
+              </div>
+
+              <div class="panel">
+                <div class="panel-h font-weight-bold">Stock</div>
+                <div class="panel-b">
+                  <select class="custom-select" id="filterStock">
+                    <option value="All">Any stock</option>
+                    <option value="In">In stock</option>
+                    <option value="Low">Low stock (≤ 5)</option>
+                  </select>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="d-flex flex-wrap">
+            <button class="btn btn-primary mr-2 mb-2" id="btnApply" data-dismiss="modal">
+              <i class="fas fa-check mr-2"></i>Apply
+            </button>
+            <button class="btn btn-outline-light mb-2" id="btnReset2" data-dismiss="modal">
+              <i class="fas fa-undo mr-2"></i>Reset
+            </button>
+            <div class="ml-auto muted mt-2">Tip: Filters + search are combined for “instant narrowing”.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK VIEW MODAL -->
+  <div class="modal fade" id="quickView" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold" id="qvTitle">Product</h5>
+          <button type="button" class="close" style="color:var(--text)" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-6 mb-3 mb-md-0">
+              <div class="p-img" style="border-radius:16px; border:1px solid var(--line)">
+                <img id="qvImg" alt="Product image" src="">
+              </div>
+              <div class="muted small mt-2" id="qvMeta"></div>
+
+              <div class="panel mt-3" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="font-weight-bold mb-2"><i class="fas fa-link mr-2"></i>OEM Cross (sample)</div>
+                  <div class="muted small" id="qvCross">—</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="price h3 mb-0" id="qvPrice">$0</div>
+                <div class="rating" id="qvRating"></div>
+              </div>
+
+              <p class="muted mt-2" id="qvDesc"></p>
+
+              <div class="panel" style="background:var(--glass2)">
+                <div class="panel-b">
+                  <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="font-weight-bold"><i class="fas fa-car mr-2"></i>Fitment</div>
+                    <span class="badge badge-soft" id="qvFitBadge">Not checked</span>
+                  </div>
+                  <ul class="muted mb-0" style="padding-left:18px">
+                    <li>Vehicle: Sedan / Hatchback (placeholder)</li>
+                    <li>Engine: 1.6–2.0L (placeholder)</li>
+                    <li>OEM cross: shown above (placeholder)</li>
+                  </ul>
+                </div>
+              </div>
+
+              <div class="d-flex mt-3">
+                <button class="btn btn-success btn-block mr-2" id="qvAdd">
+                  <i class="fas fa-cart-plus mr-2"></i>Add to Cart
+                </button>
+                <button class="btn btn-outline-light btn-block" id="qvWish">
+                  <i class="fas fa-heart mr-2"></i>Wishlist
+                </button>
+              </div>
+
+              <div class="d-flex mt-2">
+                <button class="btn btn-outline-light btn-block mr-2" id="qvCompare">
+                  <i class="fas fa-balance-scale mr-2"></i>Compare
+                </button>
+                <button class="btn btn-outline-light btn-block" onclick="toast('Share', 'Share link copied (demo).')">
+                  <i class="fas fa-share-alt mr-2"></i>Share
+                </button>
+              </div>
+
+              <div class="mt-3 muted small">
+                SKU: <span id="qvSku" class="kbd">—</span>
+                <span class="ml-2">•</span>
+                <span class="ml-2">Stock: <b id="qvStock">—</b></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-light" data-dismiss="modal">Close</button>
+          <button class="btn btn-primary" data-toggle="modal" data-target="#cartModal" data-dismiss="modal">
+            <i class="fas fa-shopping-cart mr-2"></i>Go to Cart
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FITMENT WIZARD MODAL -->
+  <div class="modal fade" id="fitmentWizard" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold"><i class="fas fa-magic mr-2"></i>Fitment Wizard</h5>
+          <button type="button" class="close" style="color:var(--text)" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="panel mb-3" style="background:var(--glass2)">
+            <div class="panel-b">
+              <div class="d-flex align-items-center justify-content-between">
+                <div class="font-weight-bold">Step <span id="wizStep">1</span> / 3</div>
+                <div class="muted small" id="wizHint">Select a Make</div>
+              </div>
+              <div class="progress mt-2" style="height:10px;border-radius:999px;background:rgba(255,255,255,.08)">
+                <div class="progress-bar" id="wizProg" style="width:33%;border-radius:999px;background:linear-gradient(90deg,var(--brand),var(--brand2));"></div>
+              </div>
+            </div>
+          </div>
+
+          <div id="wizBody"></div>
+
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-light" id="wizBack">Back</button>
+          <button class="btn btn-primary" id="wizNext">Next</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMPARE MODAL -->
+  <div class="modal fade" id="compareModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold"><i class="fas fa-balance-scale mr-2"></i>Compare Parts</h5>
+          <button type="button" class="close" style="color:var(--text)" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="muted mb-3">Compare is stored in localStorage. Select up to 3 items.</div>
+          <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0" style="background:transparent;">
+              <thead>
+                <tr>
+                  <th>Field</th>
+                  <th id="c1">—</th>
+                  <th id="c2">—</th>
+                  <th id="c3">—</th>
+                </tr>
+              </thead>
+              <tbody id="compareTable"></tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-outline-light" onclick="clearCompare()"><i class="fas fa-trash mr-2"></i>Clear</button>
+          <button class="btn btn-primary" data-dismiss="modal">Done</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART MODAL -->
+  <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title font-weight-bold"><i class="fas fa-shopping-cart mr-2"></i>Your Cart</h5>
+          <button type="button" class="close" style="color:var(--text)" data-dismiss="modal"><span>&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="table-responsive">
+            <table class="table table-dark table-hover mb-0" style="background:transparent;">
+              <thead>
+                <tr>
+                  <th>Item</th>
+                  <th>SKU</th>
+                  <th class="text-right">Price</th>
+                  <th class="text-center">Qty</th>
+                  <th class="text-right">Total</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="cartTable"></tbody>
+            </table>
+          </div>
+
+          <div class="d-flex align-items-center justify-content-between mt-3">
+            <div class="muted">
+              Shipping calculated at checkout (demo).
+            </div>
+            <div class="text-right">
+              <div class="muted">Subtotal</div>
+              <div class="h3 price mb-0" id="cartSubtotal">$0</div>
+            </div>
+          </div>
+
+          <hr class="divider">
+
+          <div class="d-flex flex-wrap">
+            <button class="btn btn-outline-light mr-2 mb-2" onclick="clearCart()">
+              <i class="fas fa-trash mr-2"></i>Clear
+            </button>
+            <button class="btn btn-outline-light mr-2 mb-2" data-dismiss="modal">
+              <i class="fas fa-arrow-left mr-2"></i>Continue Shopping
+            </button>
+            <button class="btn btn-success ml-auto mb-2" onclick="toast('Checkout', 'Checkout flow is UI-only in this template.')">
+              <i class="fas fa-lock mr-2"></i>Secure Checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div aria-live="polite" aria-atomic="true" style="position: fixed; bottom: 18px; right: 18px; z-index: 1080;">
+    <div id="appToast" class="toast" data-delay="2200">
+      <div class="toast-header">
+        <strong class="mr-auto" id="toastTitle">Notice</strong>
+        <small class="muted">now</small>
+        <button type="button" class="ml-2 mb-1 close" style="color:var(--text)" data-dismiss="toast"><span>&times;</span></button>
+      </div>
+      <div class="toast-body" id="toastBody">—</div>
+    </div>
+  </div>
+
+  <!-- JS -->
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    // ==========================
+    // PRODUCT DATA (edit here)
+    // ==========================
+    const PRODUCTS = [
+      { sku:"BRK-PAD-214", name:"Ceramic Brake Pads Set", category:"Brakes", brand:"Brembo", condition:"New",
+        rating:4.6, reviews:312, price:48.99, stock:12, badges:["Best Seller"], oem:"04465-0D080",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Brake%20pads.JPG?width=900",
+        desc:"Low-dust ceramic compound with quiet operation and consistent bite. Includes shims (sample)." },
+
+      { sku:"BRK-SHOE-101", name:"Rear Brake Shoes", category:"Brakes", brand:"OEM", condition:"New",
+        rating:4.2, reviews:88, price:29.50, stock:7, badges:["OEM Fit"], oem:"46540-2S000",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Brake%20shoes.jpg?width=900",
+        desc:"OEM-style brake shoes for drum systems. Reliable friction material and long service life (sample)." },
+
+      { sku:"IGN-SPK-4PK", name:"Spark Plugs (4-Pack)", category:"Ignition", brand:"NGK", condition:"New",
+        rating:4.8, reviews:540, price:22.00, stock:24, badges:["Top Rated"], oem:"BKR6E-11",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Spark%20plugs.jpg?width=900",
+        desc:"Improves cold start and fuel efficiency (sample). Gap/spec varies by engine—check fitment." },
+
+      { sku:"FLT-OIL-BOSCH", name:"Bosch Oil Filter", category:"Filters", brand:"Bosch", condition:"New",
+        rating:4.5, reviews:201, price:11.49, stock:30, badges:["Fast Ship"], oem:"0986AF0150",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Bosch%20Oil%20Filter.JPG?width=900",
+        desc:"High-efficiency media with strong canister design. Compatible with many models (sample)." },
+
+      { sku:"FLT-AIR-TOY-1KR", name:"Engine Air Filter (Toyota 1KR-FE)", category:"Filters", brand:"OEM", condition:"New",
+        rating:4.4, reviews:97, price:14.75, stock:15, badges:["Eco"], oem:"17801-0Y040",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Air%20filter%20for%20Toyota%201KR-FE.jpg?width=900",
+        desc:"Direct-fit air filter with durable frame. Replace every 10k–15k miles (sample)." },
+
+      { sku:"EXH-DPF-009", name:"Diesel Particulate Filter (DPF)", category:"Exhaust", brand:"OEM", condition:"Refurbished",
+        rating:4.0, reviews:44, price:249.99, stock:3, badges:["Limited"], oem:"DPF-009X",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Diesel%20particulate%20filter%2001.JPG?width=900",
+        desc:"DPF unit (sample). Ensure model/engine match; installation may require ECU adaptation." },
+
+      { sku:"SUS-SHOCK-01", name:"Rear Shock Absorber", category:"Suspension", brand:"KYB", condition:"New",
+        rating:4.3, reviews:127, price:61.00, stock:5, badges:["Low Stock"], oem:"KYB-343380",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Shock%20absorber.jpg?width=900",
+        desc:"OE-quality damping for stability and comfort. Verify mounting style and length (sample)." },
+
+      // Bundle SKU used in Deals section:
+      { sku:"KIT-BRAKE-01", name:"Brake Service Kit", category:"Brakes", brand:"OEM", condition:"New",
+        rating:4.3, reviews:51, price:89.00, stock:9, badges:["Bundle"], oem:"KIT-214-101",
+        img:"https://commons.wikimedia.org/wiki/Special:FilePath/Brake%20pads.JPG?width=900",
+        desc:"Bundle kit (sample): pads + shoes + hardware. Great value for full rear service." }
+    ];
+
+    // ==========================
+    // STATE (persisted)
+    // ==========================
+    const LS = {
+      cart: "wahid_cart_v2",
+      wish: "wahid_wish_v2",
+      compare: "wahid_compare_v2",
+      theme: "wahid_theme_v2",
+      vehicle: "wahid_vehicle_v2"
+    };
+
+    let view = [...PRODUCTS];
+    let cart = loadLS(LS.cart, []);        // [{sku, qty}]
+    let wish = loadLS(LS.wish, []);        // [sku]
+    let compare = loadLS(LS.compare, []);  // [sku]
+    let savedVehicle = loadLS(LS.vehicle, null); // {make, year} or null
+
+    // ==========================
+    // HELPERS
+    // ==========================
+    function loadLS(key, fallback){
+      try{ const v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; }
+      catch(e){ return fallback; }
+    }
+    function saveLS(key, val){ localStorage.setItem(key, JSON.stringify(val)); }
+
+    const money = (n) => `$${Number(n).toFixed(2)}`;
+    const bySku = (sku) => PRODUCTS.find(p => p.sku === sku);
+
+    function escapeHtml(str){
+      return String(str)
+        .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+    }
+
+    function stars(rating){
+      const full = Math.floor(rating);
+      const half = (rating - full) >= 0.5;
+      let html = '';
+      for(let i=0;i<5;i++){
+        if(i < full) html += '<i class="fas fa-star"></i>';
+        else if(i === full && half) html += '<i class="fas fa-star-half-alt"></i>';
+        else html += '<i class="far fa-star"></i>';
+      }
+      return html;
+    }
+
+    function toast(title, body){
+      $('#toastTitle').text(title);
+      $('#toastBody').text(body);
+      $('#appToast').toast('show');
+    }
+
+    function setTheme(isLight){
+      document.body.classList.toggle('light', !!isLight);
+      saveLS(LS.theme, !!isLight ? "light" : "dark");
+    }
+
+    function updateSavedVehicleBadge(){
+      if(savedVehicle && savedVehicle.make && savedVehicle.year){
+        $('#savedVehicle').removeClass('d-none').text(`Saved vehicle: ${savedVehicle.make} ${savedVehicle.year}`);
+      }else{
+        $('#savedVehicle').removeClass('d-none').text('No vehicle saved');
+      }
+    }
+
+    // ==========================
+    // SEARCH SUGGESTIONS
+    // ==========================
+    function buildSuggestions(q){
+      const box = $('#suggestBox');
+      box.empty();
+      if(!q){ box.hide(); return; }
+
+      const hits = PRODUCTS
+        .filter(p =>
+          p.name.toLowerCase().includes(q) ||
+          p.sku.toLowerCase().includes(q) ||
+          p.brand.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          (p.oem||"").toLowerCase().includes(q)
+        )
+        .slice(0,6);
+
+      if(hits.length === 0){ box.hide(); return; }
+
+      hits.forEach(p=>{
+        box.append(`
+          <div class="item" onclick="openQuickView('${p.sku}')">
+            <div class="d-flex align-items-center justify-content-between">
+              <div>
+                <div class="font-weight-bold">${escapeHtml(p.name)}</div>
+                <div class="muted small">${escapeHtml(p.brand)} • ${escapeHtml(p.category)} • SKU: ${escapeHtml(p.sku)}</div>
+              </div>
+              <div class="font-weight-bold">${money(p.price)}</div>
+            </div>
+          </div>
+        `);
+      });
+
+      box.show();
+    }
+
+    // ==========================
+    // RENDER: SKELETON
+    // ==========================
+    function renderSkeletons(n=6){
+      const grid = $('#productGrid');
+      grid.empty();
+      for(let i=0;i<n;i++){
+        grid.append(`
+          <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="product-card p-3">
+              <div class="skeleton" style="height:160px;"></div>
+              <div class="skeleton mt-3" style="height:18px;width:80%;"></div>
+              <div class="skeleton mt-2" style="height:14px;width:60%;"></div>
+              <div class="skeleton mt-3" style="height:38px;width:100%;"></div>
+            </div>
+          </div>
+        `);
+      }
+    }
+
+    // ==========================
+    // RENDER: PRODUCTS
+    // ==========================
+    function renderProducts(items){
+      const grid = $('#productGrid');
+      grid.empty();
+
+      items.forEach(p => {
+        const badgeHtml = (p.badges||[]).slice(0,2).map(b => {
+          const cls =
+            b === 'Limited' ? 'badge badge-danger' :
+            b === 'Top Rated' ? 'badge badge-success' :
+            b === 'Best Seller' ? 'badge badge-warning' :
+            b === 'Low Stock' ? 'badge badge-warning' :
+            b === 'Bundle' ? 'badge badge-soft' : 'badge badge-soft';
+          return `<span class="${cls}">${escapeHtml(b)}</span>`;
+        }).join('');
+
+        const stockBadge = p.stock <= 5
+          ? `<span class="badge badge-warning">Low</span>`
+          : `<span class="badge badge-soft">In</span>`;
+
+        const wishOn = wish.includes(p.sku);
+        const compOn = compare.includes(p.sku);
+
+        const fitHint = (savedVehicle && savedVehicle.make)
+          ? `<span class="badge badge-ghost ml-2">Fitment: saved</span>`
+          : ``;
+
+        grid.append(`
+          <div class="col-sm-6 col-lg-4 mb-4">
+            <div class="product-card">
+              <div class="p-img">
+                <img src="${p.img}" alt="${escapeHtml(p.name)}">
+                <div class="p-badges">${badgeHtml}</div>
+                <div class="p-actions">
+                  <div class="icon-btn" title="Quick view" onclick="openQuickView('${p.sku}')">
+                    <i class="fas fa-eye"></i>
+                  </div>
+                  <div class="icon-btn" title="Wishlist" onclick="toggleWish('${p.sku}')">
+                    <i class="${wishOn ? 'fas' : 'far'} fa-heart"></i>
+                  </div>
+                  <div class="icon-btn" title="Compare" onclick="toggleCompare('${p.sku}')">
+                    <i class="fas fa-balance-scale"></i>
+                  </div>
+                </div>
+              </div>
+
+              <div class="p-3">
+                <div class="d-flex justify-content-between align-items-start">
+                  <div style="min-width:0">
+                    <div class="font-weight-bold text-truncate">${escapeHtml(p.name)}</div>
+                    <div class="muted small">${escapeHtml(p.brand)} • ${escapeHtml(p.category)} ${fitHint}</div>
+                  </div>
+                  <div class="text-right">
+                    <div class="price">${money(p.price)}</div>
+                    <div class="muted small">${stockBadge} • Stock: <b>${p.stock}</b></div>
+                  </div>
+                </div>
+
+                <div class="d-flex align-items-center justify-content-between mt-2">
+                  <div class="rating">${stars(p.rating)} <span class="muted small ml-1">${p.rating.toFixed(1)} (${p.reviews})</span></div>
+                </div>
+
+                <div class="muted small mt-2" style="min-height:42px">
+                  ${escapeHtml(p.desc)}
+                </div>
+
+                <div class="d-flex mt-3">
+                  <button class="btn btn-success btn-sm btn-block mr-2" onclick="addToCartBySku('${p.sku}')">
+                    <i class="fas fa-cart-plus mr-1"></i>Add
+                  </button>
+                  <button class="btn btn-outline-light btn-sm btn-block" onclick="openQuickView('${p.sku}')">
+                    Details
+                  </button>
+                </div>
+
+                <div class="mt-3 muted small">
+                  OEM: <span class="kbd">${escapeHtml(p.oem || '—')}</span>
+                  <span class="ml-2">SKU:</span> <span class="kbd">${escapeHtml(p.sku)}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+      });
+
+      $('#resultCount').text(items.length);
+    }
+
+    // ==========================
+    // QUICK VIEW
+    // ==========================
+    function openQuickView(sku){
+      const p = bySku(sku);
+      if(!p) return;
+
+      $('#qvTitle').text(p.name);
+      $('#qvImg').attr('src', p.img);
+      $('#qvPrice').text(money(p.price));
+      $('#qvDesc').text(p.desc);
+      $('#qvSku').text(p.sku);
+      $('#qvStock').text(p.stock);
+      $('#qvMeta').text(`${p.brand} • ${p.category} • Condition: ${p.condition} • Stock: ${p.stock}`);
+      $('#qvCross').text(`Cross refs: ${p.oem || '—'} • ALT-${p.sku} • ${p.brand.toUpperCase()}-${p.oem || 'X'}`);
+      $('#qvRating').html(stars(p.rating) + ` <span class="muted small ml-1">${p.rating.toFixed(1)} (${p.reviews})</span>`);
+
+      $('#qvFitBadge').text(savedVehicle ? 'Vehicle saved' : 'Not checked');
+
+      $('#qvAdd').off('click').on('click', () => addToCartBySku(p.sku));
+      $('#qvWish').off('click').on('click', () => toggleWish(p.sku));
+      $('#qvCompare').off('click').on('click', () => toggleCompare(p.sku));
+
+      $('#quickView').modal('show');
+    }
+
+    // ==========================
+    // WISHLIST / COMPARE
+    // ==========================
+    function toggleWish(sku){
+      if(wish.includes(sku)) wish = wish.filter(x=>x!==sku);
+      else wish.push(sku);
+      saveLS(LS.wish, wish);
+      toast('Wishlist', wish.includes(sku) ? 'Added to wishlist.' : 'Removed from wishlist.');
+      applyAll(false);
+    }
+
+    function toggleCompare(sku){
+      if(compare.includes(sku)){
+        compare = compare.filter(x=>x!==sku);
+      }else{
+        if(compare.length >= 3){
+          toast('Compare', 'You can compare up to 3 items.');
+          return;
+        }
+        compare.push(sku);
+      }
+      saveLS(LS.compare, compare);
+      renderCompareUI();
+      applyAll(false);
+      toast('Compare', compare.includes(sku) ? 'Added to compare.' : 'Removed from compare.');
+    }
+
+    function clearCompare(){
+      compare = [];
+      saveLS(LS.compare, compare);
+      renderCompareUI();
+      toast('Compare', 'Cleared.');
+    }
+
+    function renderCompareUI(){
+      $('#compareCount').text(compare.length);
+      $('#dockCount').text(compare.length);
+      $('#compareDock').toggle(compare.length > 0);
+
+      // headers
+      const cols = [compare[0], compare[1], compare[2]].map(sku => bySku(sku));
+      $('#c1').text(cols[0]?.name || '—');
+      $('#c2').text(cols[1]?.name || '—');
+      $('#c3').text(cols[2]?.name || '—');
+
+      // table
+      const rows = [
+        {k:'SKU', v: p => p?.sku || '—'},
+        {k:'Brand', v: p => p?.brand || '—'},
+        {k:'Category', v: p => p?.category || '—'},
+        {k:'OEM', v: p => p?.oem || '—'},
+        {k:'Condition', v: p => p?.condition || '—'},
+        {k:'Rating', v: p => p ? `${p.rating.toFixed(1)} (${p.reviews})` : '—'},
+        {k:'Price', v: p => p ? money(p.price) : '—'},
+        {k:'Stock', v: p => p ? String(p.stock) : '—'}
+      ];
+
+      const tbody = $('#compareTable');
+      tbody.empty();
+      rows.forEach(r=>{
+        tbody.append(`
+          <tr>
+            <td class="font-weight-bold">${r.k}</td>
+            <td>${escapeHtml(r.v(cols[0]))}</td>
+            <td>${escapeHtml(r.v(cols[1]))}</td>
+            <td>${escapeHtml(r.v(cols[2]))}</td>
+          </tr>
+        `);
+      });
+    }
+
+    // ==========================
+    // CART
+    // ==========================
+    function addToCartBySku(sku){
+      const p = bySku(sku);
+      if(!p) return;
+      const item = cart.find(x => x.sku === sku);
+      if(item) item.qty += 1;
+      else cart.push({sku, qty: 1});
+      saveLS(LS.cart, cart);
+      toast('Cart', `${p.name} added.`);
+      renderCartBadge();
+      renderCartTable();
+    }
+
+    function removeFromCart(sku){
+      cart = cart.filter(x => x.sku !== sku);
+      saveLS(LS.cart, cart);
+      renderCartBadge();
+      renderCartTable();
+    }
+
+    function setQty(sku, qty){
+      const item = cart.find(x => x.sku === sku);
+      if(!item) return;
+      item.qty = Math.max(1, qty);
+      saveLS(LS.cart, cart);
+      renderCartBadge();
+      renderCartTable();
+    }
+
+    function clearCart(){
+      cart = [];
+      saveLS(LS.cart, cart);
+      toast('Cart', 'Cart cleared.');
+      renderCartBadge();
+      renderCartTable();
+    }
+
+    function renderCartBadge(){
+      const count = cart.reduce((acc, x) => acc + x.qty, 0);
+      $('#cartCount').text(count);
+    }
+
+    function renderCartTable(){
+      const tbody = $('#cartTable');
+      tbody.empty();
+
+      let subtotal = 0;
+      cart.forEach(item => {
+        const p = bySku(item.sku);
+        const line = p.price * item.qty;
+        subtotal += line;
+
+        tbody.append(`
+          <tr>
+            <td>${escapeHtml(p.name)}<div class="muted small">${escapeHtml(p.brand)} • ${escapeHtml(p.category)}</div></td>
+            <td><span class="kbd">${escapeHtml(p.sku)}</span></td>
+            <td class="text-right">${money(p.price)}</td>
+            <td class="text-center" style="max-width:120px">
+              <input type="number" min="1" value="${item.qty}" class="form-control form-control-sm"
+                     onchange="setQty('${p.sku}', parseInt(this.value||'1',10))">
+            </td>
+            <td class="text-right">${money(line)}</td>
+            <td class="text-right">
+              <button class="btn btn-outline-light btn-sm" onclick="removeFromCart('${p.sku}')">
+                <i class="fas fa-times"></i>
+              </button>
+            </td>
+          </tr>
+        `);
+      });
+
+      if(cart.length === 0){
+        tbody.append(`<tr><td colspan="6" class="text-center muted py-4">Your cart is empty.</td></tr>`);
+      }
+
+      $('#cartSubtotal').text(money(subtotal));
+    }
+
+    // ==========================
+    // FILTERS + SEARCH
+    // ==========================
+    function applyAll(showToast=true){
+      const q = ($('#q').val() || '').trim().toLowerCase();
+
+      const cat = $('#filterCategory').val() || 'All';
+      const brand = $('#filterBrand').val() || 'All';
+      const min = parseFloat($('#minPrice').val());
+      const max = parseFloat($('#maxPrice').val());
+
+      const allowNew = $('#condNew').is(':checked');
+      const allowRefurb = $('#condRefurb').is(':checked');
+
+      const ratingMin = $('#r45').is(':checked') ? 4.5 : ($('#r4').is(':checked') ? 4.0 : 0);
+      const stockMode = $('#filterStock').val() || 'All';
+
+      view = PRODUCTS.filter(p => {
+        const matchQ = !q || (
+          p.name.toLowerCase().includes(q) ||
+          p.sku.toLowerCase().includes(q) ||
+          p.brand.toLowerCase().includes(q) ||
+          p.category.toLowerCase().includes(q) ||
+          (p.oem||"").toLowerCase().includes(q)
+        );
+
+        const matchCat = (cat === 'All') || (p.category === cat);
+        const matchBrand = (brand === 'All') || (p.brand === brand);
+
+        const matchMin = Number.isFinite(min) ? (p.price >= min) : true;
+        const matchMax = Number.isFinite(max) ? (p.price <= max) : true;
+
+        const matchCond =
+          (allowNew && p.condition === 'New') ||
+          (allowRefurb && p.condition === 'Refurbished');
+
+        const matchRating = p.rating >= ratingMin;
+
+        const matchStock =
+          (stockMode === 'All') ||
+          (stockMode === 'In' && p.stock > 0) ||
+          (stockMode === 'Low' && p.stock > 0 && p.stock <= 5);
+
+        return matchQ && matchCat && matchBrand && matchMin && matchMax && matchCond && matchRating && matchStock;
+      });
+
+      // sort
+      const sortBy = $('#sortBy').val();
+      if(sortBy === 'priceAsc') view.sort((a,b) => a.price - b.price);
+      if(sortBy === 'priceDesc') view.sort((a,b) => b.price - a.price);
+      if(sortBy === 'ratingDesc') view.sort((a,b) => b.rating - a.rating);
+      if(sortBy === 'stockDesc') view.sort((a,b) => b.stock - a.stock);
+
+      // active filters count
+      let active = 0;
+      if(q) active++;
+      if(cat !== 'All') active++;
+      if(brand !== 'All') active++;
+      if(Number.isFinite(min) || Number.isFinite(max)) active++;
+      if(!allowNew || allowRefurb) active++;
+      if(ratingMin > 0) active++;
+      if(stockMode !== 'All') active++;
+
+      $('#activeFilters').text(active);
+
+      renderProducts(view);
+
+      if(showToast) toast('Filters', `Applied • ${active} active`);
+    }
+
+    function resetAll(){
+      $('#q').val('');
+      $('#filterCategory').val('All');
+      $('#filterBrand').val('All');
+      $('#minPrice').val('');
+      $('#maxPrice').val('');
+      $('#condNew').prop('checked', true);
+      $('#condRefurb').prop('checked', false);
+      $('#rAll').prop('checked', true);
+      $('#filterStock').val('All');
+      $('#sortBy').val('relevance');
+
+      $('.chip').removeClass('active');
+      $('.chip[data-chip="All"]').addClass('active');
+
+      view = [...PRODUCTS];
+      $('#activeFilters').text(0);
+      renderProducts(view);
+    }
+
+    // ==========================
+    // FITMENT (inline)
+    // ==========================
+    function renderFitmentRecs(){
+      const box = $('#fitmentRecs');
+      box.empty();
+
+      // lightweight “recommendations”
+      const recs = PRODUCTS.slice(0,4);
+      recs.forEach(p=>{
+        box.append(`
+          <div class="col-sm-6 mb-3">
+            <div class="panel" style="background:var(--glass2)">
+              <div class="panel-b">
+                <div class="d-flex align-items-center justify-content-between">
+                  <div class="font-weight-bold">${escapeHtml(p.name)}</div>
+                  <div class="font-weight-bold">${money(p.price)}</div>
+                </div>
+                <div class="muted small">${escapeHtml(p.brand)} • ${escapeHtml(p.category)} • OEM: ${escapeHtml(p.oem||'—')}</div>
+                <div class="d-flex mt-2">
+                  <button class="btn btn-success btn-sm btn-block mr-2" onclick="addToCartBySku('${p.sku}')"><i class="fas fa-cart-plus mr-1"></i>Add</button>
+                  <button class="btn btn-outline-light btn-sm btn-block" onclick="openQuickView('${p.sku}')">Details</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        `);
+      });
+    }
+
+    // ==========================
+    // WIZARD
+    // ==========================
+    let wiz = { step:1, make:"", year:"", engine:"" };
+
+    function renderWizard(){
+      $('#wizStep').text(wiz.step);
+      $('#wizProg').css('width', (wiz.step*33.33) + '%');
+
+      const body = $('#wizBody');
+      body.empty();
+
+      if(wiz.step === 1){
+        $('#wizHint').text('Select a Make');
+        body.append(`
+          <div class="panel" style="background:var(--glass2)">
+            <div class="panel-b">
+              <label class="muted mb-1">Make</label>
+              <select class="custom-select" id="wizMake">
+                <option value="">Select</option>
+                <option>Toyota</option><option>Hyundai</option><option>Ford</option><option>Nissan</option>
+              </select>
+              <div class="muted small mt-2">Tip: store make/model/year as a saved profile for faster shopping.</div>
+            </div>
+          </div>
+        `);
+        $('#wizMake').val(wiz.make);
+      }
+
+      if(wiz.step === 2){
+        $('#wizHint').text('Pick Year');
+        body.append(`
+          <div class="panel" style="background:var(--glass2)">
+            <div class="panel-b">
+              <label class="muted mb-1">Year</label>
+              <select class="custom-select" id="wizYear">
+                <option value="">Select</option>
+                <option>2018</option><option>2019</option><option>2020</option><option>2021</option><option>2022</option>
+              </select>
+              <div class="muted small mt-2">Pro: use VIN decode to auto-fill this step.</div>
+            </div>
+          </div>
+        `);
+        $('#wizYear').val(wiz.year);
+      }
+
+      if(wiz.step === 3){
+        $('#wizHint').text('Confirm & Save');
+        body.append(`
+          <div class="panel" style="background:var(--glass2)">
+            <div class="panel-b">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <div class="font-weight-bold">Vehicle Profile</div>
+                  <div class="muted small">This will improve search relevance (demo).</div>
+                </div>
+                <span class="badge badge-soft">Ready</span>
+              </div>
+
+              <hr class="divider">
+
+              <div class="row">
+                <div class="col-md-6 mb-2">
+                  <div class="muted small">Make</div>
+                  <div class="font-weight-bold" id="wizSummaryMake">${escapeHtml(wiz.make || '—')}</div>
+                </div>
+                <div class="col-md-6 mb-2">
+                  <div class="muted small">Year</div>
+                  <div class="font-weight-bold" id="wizSummaryYear">${escapeHtml(wiz.year || '—')}</div>
+                </div>
+              </div>
+
+              <button class="btn btn-success btn-block mt-3" id="wizSave">
+                <i class="fas fa-save mr-2"></i>Save Vehicle Profile
+              </button>
+            </div>
+          </div>
+        `);
+
+        $('#wizSave').on('click', ()=>{
+          if(!wiz.make || !wiz.year){
+            toast('Fitment', 'Please complete steps 1 and 2.');
+            return;
+          }
+          savedVehicle = { make:wiz.make, year:wiz.year };
+          saveLS(LS.vehicle, savedVehicle);
+          updateSavedVehicleBadge();
+          $('#fitmentBadge').text('Vehicle saved').removeClass('badge-soft').addClass('badge badge-success');
+          toast('Fitment', `Saved: ${wiz.make} ${wiz.year}`);
+          $('#fitmentWizard').modal('hide');
+          applyAll(false);
+        });
+      }
+
+      $('#wizBack').prop('disabled', wiz.step === 1);
+      $('#wizNext').text(wiz.step === 3 ? 'Finish' : 'Next');
+    }
+
+    // ==========================
+    // EVENTS
+    // ==========================
+    $(function(){
+      // Theme init
+      const savedTheme = loadLS(LS.theme, "dark");
+      setTheme(savedTheme === "light");
+
+      // skeleton then render (gives “premium” feel)
+      renderSkeletons(6);
+      setTimeout(()=>{ resetAll(); }, 350);
+
+      // init UI
+      renderCartBadge();
+      renderCartTable();
+      renderCompareUI();
+      renderFitmentRecs();
+      updateSavedVehicleBadge();
+
+      // Fitment badge state
+      if(savedVehicle) $('#fitmentBadge').text('Vehicle saved').removeClass('badge-soft').addClass('badge badge-success');
+
+      // Search / suggestions
+      $('#q').on('input', function(){
+        const q = ($(this).val()||'').trim().toLowerCase();
+        buildSuggestions(q);
+      });
+      $(document).on('click', function(e){
+        if(!$(e.target).closest('.search-wrap').length) $('#suggestBox').hide();
+      });
+
+      $('#btnSearch').on('click', ()=>{ $('#suggestBox').hide(); applyAll(false); toast('Search', 'Results updated.'); });
+      $('#btnVoice').on('click', ()=> toast('Voice', 'Voice search is UI-only in this template.'));
+
+      // Theme toggle
+      $('#btnTheme').on('click', ()=>{
+        const isLight = document.body.classList.contains('light');
+        setTheme(!isLight);
+        toast('Theme', !isLight ? 'Light mode' : 'Dark mode');
+      });
+
+      // Filters
+      $('#btnApply').on('click', ()=> applyAll(false));
+      $('#btnReset').on('click', ()=>{ resetAll(); toast('Filters', 'Reset complete.'); });
+      $('#btnReset2').on('click', ()=>{ resetAll(); toast('Filters', 'Reset complete.'); });
+      $('#sortBy').on('change', ()=> applyAll(false));
+
+      // Chips drive category
+      $('.chip').on('click', function(){
+        $('.chip').removeClass('active');
+        $(this).addClass('active');
+        const c = $(this).data('chip');
+        $('#filterCategory').val(c === 'All' ? 'All' : c);
+        applyAll(false);
+      });
+
+      // Deal button
+      $('#btnDeal').on('click', ()=> openQuickView('BRK-PAD-214'));
+
+      // Fitment quick check
+      $('#btnFitment').on('click', ()=>{
+        const make = $('#make').val();
+        const year = $('#year').val();
+        const vin = ($('#vin').val()||'').trim();
+
+        if(!vin && (!make || !year)){
+          toast('Fitment', 'Enter VIN or select Make + Year (demo).');
+          return;
+        }
+        const chosenMake = make || 'VIN vehicle';
+        const chosenYear = year || '—';
+
+        savedVehicle = { make: chosenMake, year: chosenYear };
+        saveLS(LS.vehicle, savedVehicle);
+        updateSavedVehicleBadge();
+        $('#fitmentBadge').text('Vehicle saved').removeClass('badge-soft').addClass('badge badge-success');
+        toast('Fitment', `Saved: ${chosenMake} ${chosenYear}`);
+        applyAll(false);
+      });
+
+      // Wizard modal open
+      $('#fitmentWizard').on('shown.bs.modal', ()=>{
+        wiz = { step:1, make:"", year:"", engine:"" };
+        renderWizard();
+      });
+
+      $('#wizBack').on('click', ()=>{
+        wiz.step = Math.max(1, wiz.step-1);
+        renderWizard();
+      });
+
+      $('#wizNext').on('click', ()=>{
+        if(wiz.step === 1){
+          wiz.make = ($('#wizMake').val()||'').trim();
+          if(!wiz.make){ toast('Wizard', 'Pick a make first.'); return; }
+          wiz.step = 2; renderWizard(); return;
+        }
+        if(wiz.step === 2){
+          wiz.year = ($('#wizYear').val()||'').trim();
+          if(!wiz.year){ toast('Wizard', 'Pick a year first.'); return; }
+          wiz.step = 3; renderWizard(); return;
+        }
+        if(wiz.step === 3){
+          // Finish button handled by Save
+          toast('Wizard', 'Press "Save Vehicle Profile" to finish.');
+        }
+      });
+
+      // Hotkeys
+      document.addEventListener('keydown', (e) => {
+        const tag = (document.activeElement && document.activeElement.tagName) || '';
+        const typing = tag === 'INPUT' || tag === 'TEXTAREA' || document.activeElement?.isContentEditable;
+
+        if(e.key === '/' && !typing){
+          e.preventDefault();
+          $('#q').focus();
+        }
+        if(e.key === 'Escape'){
+          if(document.activeElement === document.getElementById('q')){
+            $('#q').val('');
+            $('#suggestBox').hide();
+            applyAll(false);
+            toast('Search', 'Cleared.');
+          }
+        }
+        if((e.key === 'c' || e.key === 'C') && !typing){
+          $('#cartModal').modal('show');
+        }
+      });
+
+      $('#btnHotkey').on('click', ()=> toast('Hotkeys', 'Press "/" for search • "C" for cart • Esc to clear search'));
+
+      // Load more demo
+      $('#btnLoadMore').on('click', ()=> toast('Demo', 'Pagination is UI-only in this template.'));
+    });
+
+    // Expose some functions for inline onclick
+    window.openQuickView = openQuickView;
+    window.addToCartBySku = addToCartBySku;
+    window.clearCart = clearCart;
+    window.toggleWish = toggleWish;
+    window.toggleCompare = toggleCompare;
+    window.clearCompare = clearCompare;
+    window.toast = toast;
+    window.setQty = setQty;
+    window.removeFromCart = removeFromCart;
+  </script>
+</body>
+</html>
